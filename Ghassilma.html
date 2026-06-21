@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghassil.ma — Laundry Pickup & Delivery</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&family=Passions+Conflict&display=swap" rel="stylesheet"><style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0D1B2A;
+    --blue: #4EACD1;
+    --blue-dark: #2E7FA8;
+    --linen: #F5F0E8;
+    --white: #FFFFFF;
+    --gray: #6B7280;
+    --light: #EEF7FC;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--white);
+    color: var(--navy);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(13,27,42,0.95);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 5%;
+  }
+
+  .logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+
+  .logo span { color: var(--blue); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--blue);
+    color: var(--white) !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    font-weight: 600 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--blue-dark) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(rgba(13,27,42,0.82), rgba(13,27,42,0.88)), url('data:image/jpeg;base64,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') center/cover no-repeat;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 6rem 5% 4rem;
+    gap: 4rem;
+    overflow: hidden;
+    position: relative;
+  }
+  .why-label {
+    font-family: "Passions Conflict", cursive;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 7rem;
+    color: var(--blue);
+    text-align: right;
+    white-space: nowrap;
+    line-height: 1.2;
+  
+}
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(78,172,209,0.12) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+  }
+
+  .hero-text { position: relative; z-index: 1; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(78,172,209,0.15);
+    border: 1px solid rgba(78,172,209,0.3);
+    color: var(--blue);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-badge::before { content: '●'; font-size: 0.5rem; animation: pulse 2s infinite; }
+
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 4vw, 3.8rem);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+    letter-spacing: -1.5px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--blue);
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--blue);
+    color: var(--white);
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--blue-dark);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.2s;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .btn-outline:hover {
+    border-color: rgba(255,255,255,0.5);
+    color: var(--white);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .stat-num {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* WASHING MACHINE ANIMATION */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .machine-wrap {
+    position: relative;
+    width: 320px;
+    height: 320px;
+  }
+
+  .machine {
+    width: 280px;
+    height: 280px;
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(78,172,209,0.25);
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .machine::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 16px;
+    background: rgba(78,172,209,0.15);
+    border-radius: 8px;
+  }
+
+  .drum {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 3px solid rgba(78,172,209,0.5);
+    background: rgba(78,172,209,0.08);
+    position: relative;
+    animation: spin 4s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .drum-inner {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid rgba(78,172,209,0.3);
+    background: rgba(13,27,42,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: spin 4s linear infinite reverse;
+    font-size: 2.5rem;
+  }
+
+  .drum-hole {
+    position: absolute;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: rgba(78,172,209,0.4);
+  }
+
+  .drum-hole:nth-child(1) { top: 15px; left: 50%; transform: translateX(-50%); }
+  .drum-hole:nth-child(2) { bottom: 15px; left: 50%; transform: translateX(-50%); }
+  .drum-hole:nth-child(3) { left: 15px; top: 50%; transform: translateY(-50%); }
+  .drum-hole:nth-child(4) { right: 15px; top: 50%; transform: translateY(-50%); }
+
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(78,172,209,0.2);
+    animation: float-up linear infinite;
+  }
+
+  @keyframes float-up {
+    0% { transform: translateY(0) scale(1); opacity: 0.6; }
+    100% { transform: translateY(-300px) scale(0.2); opacity: 0; }
+  }
+
+  .bubble:nth-child(1) { width: 12px; height: 12px; left: 60px; bottom: 20px; animation-duration: 3.5s; animation-delay: 0s; }
+  .bubble:nth-child(2) { width: 8px; height: 8px; left: 120px; bottom: 10px; animation-duration: 2.8s; animation-delay: 0.5s; }
+  .bubble:nth-child(3) { width: 14px; height: 14px; left: 180px; bottom: 25px; animation-duration: 4s; animation-delay: 1s; }
+  .bubble:nth-child(4) { width: 6px; height: 6px; left: 90px; bottom: 15px; animation-duration: 3.2s; animation-delay: 1.5s; }
+  .bubble:nth-child(5) { width: 10px; height: 10px; left: 150px; bottom: 8px; animation-duration: 3.8s; animation-delay: 0.8s; }
+
+  /* WhatsApp-style chat */
+  .wa-chat {
+    position: absolute;
+    background: #ECE5DD;
+    border-radius: 12px;
+    padding: 0.6rem 0.75rem;
+    width: 210px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+  }
+
+  .wa-chat .wa-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #d0c8c0;
+    margin-bottom: 0.5rem;
+  }
+
+  .wa-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .wa-chat .wa-contact { font-size: 0.72rem; font-weight: 700; color: #111; }
+  .wa-chat .wa-status { font-size: 0.62rem; color: #25D366; }
+
+  .wa-msg {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .wa-bubble {
+    padding: 0.45rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: #111;
+    position: relative;
+    max-width: 88%;
+  }
+
+  .wa-bubble.received {
+    background: #fff;
+    align-self: flex-start;
+    border-top-left-radius: 2px;
+  }
+
+  .wa-bubble.sent {
+    background: #DCF8C6;
+    align-self: flex-end;
+    border-top-right-radius: 2px;
+  }
+
+  .wa-bubble .wa-sender {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #25D366;
+    margin-bottom: 0.15rem;
+  }
+
+  .wa-bubble .wa-time {
+    font-size: 0.55rem;
+    color: #999;
+    text-align: right;
+    margin-top: 0.15rem;
+  }
+
+  .wa-bubble.sent .wa-time::after {
+    content: ' ✓✓';
+    color: #53bdeb;
+  }
+
+  .wa-chat.left {
+    top: -20px;
+    right: -65px;
+    animation: bob 3s ease-in-out infinite;
+  }
+
+  .wa-chat.right {
+    bottom: 0px;
+    left: -75px;
+    animation: bob 3s ease-in-out infinite 1.5s;
+  }
+
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+  /* HOW IT WORKS */
+  .section {
+    padding: 6rem 5%;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--blue);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+
+  .section-sub {
+    color: var(--gray);
+    font-size: 1.05rem;
+    max-width: 520px;
+  }
+
+  .section-head {
+    margin-bottom: 3.5rem;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: #E5E7EB;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .step {
+    background: var(--white);
+    padding: 2.5rem 2rem;
+    position: relative;
+  }
+
+  .step:first-child { border-radius: 20px 0 0 20px; }
+  .step:last-child { border-radius: 0 20px 20px 0; }
+
+  .step-num {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .step-icon {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .step h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--navy);
+  }
+
+  .step p {
+    font-size: 0.88rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  /* SERVICES */
+  .services-bg {
+    background: var(--linen);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1.5px solid #E5E7EB;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card.featured {
+    border-color: var(--blue);
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+
+  .service-card.featured:hover {
+    box-shadow: 0 12px 40px rgba(78,172,209,0.2);
+  }
+
+  .popular-badge {
+    display: inline-block;
+    background: var(--blue);
+    color: var(--white);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+  }
+
+  .service-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+
+  .service-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .service-card.featured h3 { color: var(--white); }
+
+  .service-desc {
+    font-size: 0.88rem;
+    color: var(--gray);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .service-card.featured .service-desc { color: rgba(255,255,255,0.65); }
+
+  .service-price {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 0.25rem;
+    line-height: 1;
+  }
+
+  .service-card.featured .service-price { color: var(--white); }
+
+  .service-price span {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--gray);
+  }
+
+  .service-card.featured .service-price span { color: rgba(255,255,255,0.5); }
+
+  .service-features {
+    list-style: none;
+    margin: 1.25rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .service-features li {
+    font-size: 0.85rem;
+    color: var(--gray);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .service-card.featured .service-features li { color: rgba(255,255,255,0.75); }
+
+  .service-features li::before { content: ''; color: var(--blue); font-weight: 700; }
+
+  .btn-service {
+    display: block;
+    text-align: center;
+    padding: 0.75rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .btn-service-outline {
+    border: 1.5px solid #E5E7EB;
+    color: var(--navy);
+    background: transparent;
+  }
+
+  .btn-service-outline:hover { border-color: var(--blue); color: var(--blue); }
+
+  .btn-service-primary {
+    background: var(--blue);
+    color: var(--white);
+  }
+
+  .btn-service-primary:hover { background: var(--blue-dark); }
+
+  /* BOOKING */
+  .booking-section {
+    background: var(--navy);
+    padding: 6rem 5%;
+  }
+
+  .booking-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .booking-section .section-label { color: var(--blue); }
+  .booking-section .section-title { color: var(--white); }
+  .booking-section .section-sub { color: rgba(255,255,255,0.55); }
+
+  .booking-form {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 2.5rem;
+    margin-top: 2rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    color: var(--white);
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    outline: none;
+    width: 100%;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+
+  .form-group select option { background: var(--navy); }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--blue); }
+
+  .form-group textarea { resize: vertical; min-height: 90px; }
+
+  .time-slots {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+  }
+
+  .time-slot {
+    padding: 0.5rem;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+
+  .time-slot:hover, .time-slot.active {
+    border-color: var(--blue);
+    color: var(--blue);
+    background: rgba(78,172,209,0.1);
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+    font-family: inherit;
+  }
+
+  .submit-btn:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--linen); padding: 6rem 5%; }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .testimonial {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid #E5E7EB;
+  }
+
+  .stars {
+    color: #F59E0B;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+
+  .testimonial p {
+    font-size: 0.92rem;
+    color: #374151;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .reviewer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--white);
+  }
+
+  .reviewer-name { font-weight: 700; font-size: 0.88rem; color: var(--navy); }
+  .reviewer-role { font-size: 0.78rem; color: var(--gray); }
+
+  /* WHY US */
+  .why-us { padding: 6rem 5%;
+
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .why-image {
+    background: var(--navy);
+    border-radius: 24px;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .why-feat {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+  }
+
+  .why-feat-icon { font-size: 1.5rem; }
+  .why-feat-text { }
+  .why-feat h4 { font-size: 0.92rem; font-weight: 700; color: var(--white); margin-bottom: 0.15rem; }
+  .why-feat p { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+
+  .why-points { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+
+  .why-point { display: flex; gap: 1rem; align-items: flex-start; }
+
+  .why-point-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    background: var(--light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+
+  .why-point h4 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.25rem; }
+  .why-point p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    padding: 4rem 5% 2rem;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 2rem;
+  }
+
+  .footer-brand .logo { font-size: 1.2rem; display: block; margin-bottom: 0.75rem; }
+
+  .footer-brand p { font-size: 0.85rem; line-height: 1.7; max-width: 260px; }
+
+  .footer-col h5 {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 1rem;
+  }
+
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .footer-col ul a {
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: color 0.2s;
+  }
+
+  .footer-col ul a:hover { color: var(--white); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+  }
+
+  /* CONFIRMATION */
+  .confirmation {
+    display: none;
+    background: rgba(78,172,209,0.12);
+    border: 1px solid rgba(78,172,209,0.35);
+    border-radius: 14px;
+    padding: 1.25rem;
+    text-align: center;
+    color: var(--blue);
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding-top: 7rem; text-align: center; }
+    .hero-visual { display: none; }
+    .hero-actions { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .step:first-child { border-radius: 20px 0 0 0; }
+    .step:last-child { border-radius: 0 0 20px 0; }
+    .step:nth-child(2) { border-radius: 0 20px 0 0; }
+    .step:nth-child(3) { border-radius: 0 0 0 20px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .time-slots { grid-template-columns: repeat(2, 1fr); }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Ghassil<span>.ma</span></div>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why-us">Why us</a></li>
+    <li><a href="#book" class="nav-cta">Book pickup</a></li>
+  </ul>
+  <a href="#book" class="btn-primary" style="display:none" id="mobile-cta">Book now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-badge">● Now serving your area</div>
+    <h1>Clean clothes,<br>delivered to your <em>door</em></h1>
+    <p>We pick up, wash, dry, fold, and return your laundry — all within 24 hours. No hassle, no trips to the laundromat.</p>
+    <div class="hero-actions">
+      <a href="#book" class="btn-primary">Schedule a pickup</a>
+      <a href="#how-it-works" class="btn-outline">See how it works</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">24h</div>
+        <div class="stat-label">Turnaround</div>
+      </div>
+      <div>
+        <div class="stat-num">5k+</div>
+        <div class="stat-label">Happy clients</div>
+      </div>
+      <div>
+        <div class="stat-num">4.9</div>
+        <div class="stat-label">Average rating</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="machine-wrap">
+      <div class="machine">
+        <div class="drum">
+          <div class="drum-hole"></div>
+          <div class="drum-hole"></div>
+          <div class="drum-hole"></div>
+          <div class="drum-hole"></div>
+          <div class="drum-inner"></div>
+        </div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+      </div>
+      <div class="wa-chat left">
+        <div class="wa-header">
+          <div class="wa-avatar" style="background:#259cd3">KA</div>
+          <div>
+            <div class="wa-contact">Karim</div>
+            <div class="wa-status">online</div>
+          </div>
+        </div>
+        <div class="wa-msg">
+          <div class="wa-bubble received">
+            <div class="wa-sender">Karim</div>
+            ww ma3di manlbas 4da ga3 7wayji mos5in 😭😭
+            <div class="wa-time">10:42</div>
+          </div>
+        </div>
+      </div>
+      <div class="wa-chat right">
+        <div class="wa-header">
+          <div class="wa-avatar" style="background:#128C7E">AB</div>
+          <div>
+            <div class="wa-contact">Abdelali</div>
+            <div class="wa-status">online</div>
+          </div>
+        </div>
+        <div class="wa-msg">
+          <div class="wa-bubble sent">
+           wayli asa7bi masma3tich bi Ghassil.ma? rah kay4aslo l7wayj okayjibohom tal bab dark 
+            <div class="wa-time">10:43</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how-it-works">
+  <div class="section-head">
+    <div class="section-label">The process</div>
+    <h2 class="section-title">From your door<br>back to your door</h2>
+    <p class="section-sub">Four simple steps — you don't lift a finger except to schedule your pickup.</p>
+  </div>
+
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">Step 01</div>
+      <span class="step-icon"></span>
+      <h3>Book online</h3>
+      <p>Choose your service, select a pickup time, and enter your address. Takes under two minutes.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Step 02</div>
+      <span class="step-icon"></span>
+      <h3>We collect</h3>
+      <p>Our driver arrives at your door during your chosen slot and collects your laundry bags.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Step 03</div>
+      <span class="step-icon"></span>
+      <h3>We wash & fold</h3>
+      <p>Your clothes are washed, dried, and neatly folded at our professional facility.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Step 04</div>
+      <span class="step-icon"></span>
+      <h3>We deliver</h3>
+      <p>Within 24 hours, your clean, fresh-smelling laundry is back at your door.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services-bg" id="services">
+  <div class="section-head">
+    <div class="section-label">Pricing & services</div>
+    <h2 class="section-title">Pick your plan</h2>
+    <p class="section-sub">Simple, transparent pricing. No hidden fees.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon"></span>
+      <h3>Wash & Fold</h3>
+      <p class="service-desc">Everyday laundry sorted quickly. Perfect for weekly loads of clothes and basics.</p>
+      <div class="service-price">29 MAD <span>/ kg</span></div>
+      <ul class="service-features">
+        <li>Pickup & delivery included</li>
+        <li>24-hour turnaround</li>
+        <li>Separated by color</li>
+        <li>Hypoallergenic detergent option</li>
+      </ul>
+      <button class="btn-service btn-service-outline" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Book now</button>
+    </div>
+
+    <div class="service-card featured">
+      <div class="popular-badge">Most popular</div>
+      <span class="service-icon"></span>
+      <h3>Dry Cleaning</h3>
+      <p class="service-desc">Professional care for delicate, formal, and specialty garments that need expert handling.</p>
+      <div class="service-price">65 MAD <span>/ item</span></div>
+      <ul class="service-features">
+        <li>Pickup & delivery included</li>
+        <li>Expert stain treatment</li>
+        <li>Suit & dress specialists</li>
+        <li>Packaged in garment bag</li>
+      </ul>
+      <button class="btn-service btn-service-primary" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Book now</button>
+    </div>
+
+    <div class="service-card">
+      <span class="service-icon">️</span>
+      <h3>Bedding & Linens</h3>
+      <p class="service-desc">Duvets, pillowcases, sheets, and towels — washed large and returned fresh and fluffy.</p>
+      <div class="service-price">49 MAD <span>/ set</span></div>
+      <ul class="service-features">
+        <li>Pickup & delivery included</li>
+        <li>Deep sanitizing wash</li>
+        <li>Duvets & heavy items</li>
+        <li>Vacuum-sealed packing</li>
+      </ul>
+      <button class="btn-service btn-service-outline" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Book now</button>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-us" id="why-us">
+  <div class="why-grid">
+
+    <div>
+      <h2 class="section-title">We treat your clothes like our own</h2>
+      <div class="why-points">
+        <div class="why-point">
+          <div class="why-point-icon">✓</div>
+          <div>
+            <h4>Reliable 24-hour guarantee</h4>
+            <p>If we're late, your next order is free. We mean it — punctuality is part of our promise.</p>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-point-icon">✓</div>
+          <div>
+            <h4>Your preferences, remembered</h4>
+            <p>Set your scent, temperature, and fold preferences once — we remember them every time.</p>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-point-icon">✓</div>
+          <div>
+            <h4>Damage protection policy</h4>
+            <p>Every order is insured. If something is damaged, we replace or compensate — no questions asked.</p>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-point-icon">✓</div>
+          <div>
+            <h4>Trusted, vetted drivers</h4>
+            <p>Every pickup and delivery is handled by background-checked, uniformed Ghassil.ma staff.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex; align-items:center; justify-content:center;">
+      <div class="why-label">Why choose us ?</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking-section" id="book">
+  <div class="booking-inner">
+    <div class="section-label" style="text-align:center">Schedule a pickup</div>
+    <h2 class="section-title" style="text-align:center">Ready for fresh laundry?</h2>
+    <p class="section-sub" style="text-align:center; margin: 0 auto 0;">Fill in your details and we'll be at your door.</p>
+
+    <div class="booking-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First name</label>
+          <input type="text" placeholder="Youssef" id="fname">
+        </div>
+        <div class="form-group">
+          <label>Last name</label>
+          <input type="text" placeholder="El Fassi" id="lname">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Phone number</label>
+          <input type="tel" placeholder="+212 6XX XXX XXX" id="phone">
+        </div>
+        <div class="form-group">
+          <label>Email address</label>
+          <input type="email" placeholder="you@email.com" id="email">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Pickup address</label>
+        <input type="text" placeholder="Street, district, city" id="address">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Service type</label>
+          <select id="service">
+            <option value="">Select a service…</option>
+            <option>Wash & Fold — 29 MAD/kg</option>
+            <option>Dry Cleaning — 65 MAD/item</option>
+            <option>Bedding & Linens — 49 MAD/set</option>
+            <option>Express (same day) — +50% surcharge</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Pickup date</label>
+          <input type="date" id="date">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Preferred pickup time</label>
+        <div class="time-slots">
+          <div class="time-slot" onclick="selectTime(this)">8–10 AM</div>
+          <div class="time-slot" onclick="selectTime(this)">10–12 PM</div>
+          <div class="time-slot" onclick="selectTime(this)">12–2 PM</div>
+          <div class="time-slot" onclick="selectTime(this)">2–4 PM</div>
+          <div class="time-slot" onclick="selectTime(this)">4–6 PM</div>
+          <div class="time-slot" onclick="selectTime(this)">6–8 PM</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Special instructions (optional)</label>
+        <textarea placeholder="E.g. cold wash for wool, hang dry shirts, use fragrance-free detergent…" id="notes"></textarea>
+      </div>
+
+      <button class="submit-btn" onclick="submitBooking()">Confirm pickup booking →</button>
+      <div class="confirmation" id="confirmation">
+         Booking confirmed! We'll send details to your phone and email shortly.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-head">
+    <div class="section-label">Reviews</div>
+    <h2 class="section-title">What our clients say</h2>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial">
+      <div class="stars"></div>
+      <p>"I've been using Ghassil.ma every week for four months. The clothes come back perfectly folded and smelling amazing. The driver is always on time — I don't know how they do it."</p>
+      <div class="reviewer">
+        <div class="avatar" style="background:#4EACD1">SA</div>
+        <div>
+          <div class="reviewer-name">Salma Amrani</div>
+          <div class="reviewer-role">Marketing Manager, Casablanca</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <div class="stars"></div>
+      <p>"As a business owner, I can't waste time at the laundromat. Ghassil.ma handles my shirts and suits perfectly. The dry cleaning results are better than what I used to pay double for elsewhere."</p>
+      <div class="reviewer">
+        <div class="avatar" style="background:#0D1B2A">KB</div>
+        <div>
+          <div class="reviewer-name">Karim Benali</div>
+          <div class="reviewer-role">Entrepreneur, Rabat</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <div class="stars"></div>
+      <p>"Ordered bedding and duvet cleaning for the first time. Came back in vacuum packaging, fresh and clean. Booking was super easy and the confirmation SMS kept me updated the whole time."</p>
+      <div class="reviewer">
+        <div class="avatar" style="background:#2E7FA8">NM</div>
+        <div>
+          <div class="reviewer-name">Nadia Moufid</div>
+          <div class="reviewer-role">Teacher, Marrakech</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo">Ghassil<span>.ma</span></span>
+      <p>Professional laundry pickup & delivery service. Clean clothes, zero hassle — at your door within 24 hours.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#services">Wash & Fold</a></li>
+        <li><a href="#services">Dry Cleaning</a></li>
+        <li><a href="#services">Bedding & Linens</a></li>
+        <li><a href="#services">Express Service</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="tel:+212600000000">+212 6 00 00 00 00</a></li>
+        <li><a href="mailto:hello@ghassil.ma">hello@ghassil.ma</a></li>
+        <li><a href="#">WhatsApp us</a></li>
+        <li><a href="#">Help center</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Ghassil.ma. All rights reserved.</span>
+    <span>Privacy · Terms · Cookies</span>
+  </div>
+</footer>
+
+<script>
+  function selectTime(el) {
+    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function submitBooking() {
+    const fname = document.getElementById('fname').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const service = document.getElementById('service').value;
+    const date = document.getElementById('date').value;
+    const activeSlot = document.querySelector('.time-slot.active');
+
+    if (!fname || !phone || !address || !service || !date || !activeSlot) {
+      alert('Please fill in all required fields and select a time slot.');
+      return;
+    }
+
+    const conf = document.getElementById('confirmation');
+    conf.style.display = 'block';
+    conf.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    document.querySelectorAll('.booking-form input, .booking-form select, .booking-form textarea').forEach(el => {
+      el.value = '';
+    });
+    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('active'));
+  }
+
+  function showPrototypeMsg(e) {
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    document.getElementById('proto-modal').classList.add('visible');
+  }
+
+  window.addEventListener('load', function() {
+    // Set min date
+    const today = new Date().toISOString().split('T')[0];
+    const dateEl = document.getElementById('date');
+    if (dateEl) dateEl.setAttribute('min', today);
+
+    // Mobile CTA
+    const mobileCta = document.getElementById('mobile-cta');
+    if (mobileCta && window.innerWidth <= 900) mobileCta.style.display = 'inline-block';
+
+    // Prototype modal listeners
+    const closeBtn = document.getElementById('proto-close');
+    const modal = document.getElementById('proto-modal');
+
+    if (closeBtn) closeBtn.addEventListener('click', function() {
+      modal.classList.remove('visible');
+    });
+
+    if (modal) modal.addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('visible');
+    });
+
+    // Attach prototype popup to all clickable elements
+    document.querySelectorAll('a, button, .time-slot').forEach(function(el) {
+      el.addEventListener('click', showPrototypeMsg, true);
+    });
+  });
+</script>
+
+<!-- PROTOTYPE MODAL -->
+<div id="proto-modal" style="
+  display:flex; align-items:center; justify-content:center;
+  position:fixed; inset:0; z-index:9999;
+  background:rgba(13,27,42,0.75); backdrop-filter:blur(6px);
+  opacity:0; pointer-events:none;
+  transition: opacity 0.25s ease;
+">
+  <div style="
+    background:#fff; border-radius:20px; padding:2.5rem 2rem;
+    max-width:380px; width:90%; text-align:center;
+    box-shadow:0 24px 60px rgba(0,0,0,0.3);
+    transform:translateY(20px); transition:transform 0.25s ease;
+  " id="proto-box">
+    <div style="font-size:3rem; margin-bottom:1rem;"></div>
+    <h2 style="font-family:'Inter',sans-serif; font-size:1.3rem; font-weight:800; color:#0D1B2A; margin-bottom:0.75rem; letter-spacing:-0.5px;">
+      This is a Prototype
+    </h2>
+    <p style="font-family:'Inter',sans-serif; font-size:0.92rem; color:#6B7280; line-height:1.7; margin-bottom:1.75rem;">
+      This website is a <strong style="color:#0D1B2A;">demo only</strong>.<br>
+      The Ghassil.ma laundry service is <strong style="color:#0D1B2A;">not yet available</strong>.<br>
+      Stay tuned — we're coming soon! 
+    </p>
+    <button id="proto-close" style="
+      background:#4EACD1; color:#fff; border:none;
+      padding:0.75rem 2rem; border-radius:50px;
+      font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:700;
+      cursor:pointer; transition:background 0.2s;
+    ">Got it!</button>
+  </div>
+</div>
+
+<style>
+  #proto-modal.visible {
+    opacity: 1 !important;
+    pointer-events: all !important;
+  }
+  #proto-modal.visible #proto-box {
+    transform: translateY(0) !important;
+  }
+</style>
+
+</body>
+</html>
